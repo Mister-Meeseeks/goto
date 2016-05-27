@@ -38,16 +38,19 @@ Finally, Go enforces a rigid structure on any repository that wants to use Go co
 folder becomes the namespace, Go code must basically be kept at repo root. Otherwise the sub-directory tree clutters the 
 namespace and import directive. E.g. consider a multi-language repo structued like:
 
-/docs
-/tests
-/cfg
-/src
-  /v1.0
-    /js
-    /cpp
-    /go
-      /mammals/primates
-    
+```
++== _config.yml
++== _docs
++== _cfg
++== _tests
++== src
+|   +== v1.0
+|   |   +== js
+|   |   +== cpp
+|   |   +== go
+|   |   |   +== mammals/primates
+```
+
 Go's remote repository convention means the package is now located at ```github.com/zookeeper/src/v1.0/go/mammals/primates```.
 The "src/v1.0/go" component is just pure organizational book-keeping from the repo's owner standpoint. But now every single
 package consumer has to be intimately familiar with the repository structure and tediously include this boilerplate at every
