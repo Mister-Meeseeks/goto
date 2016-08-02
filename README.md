@@ -7,7 +7,7 @@ Project is not ready yet. Check back later.
 
 ## Motivations
 
-Tl;dr: Golang's namespace and import system sucks. Read on for a defense.
+Tl;dr: Golang's namespace and import system sucks. Read on for a defense. Skip this section if you're already convinced.
 
 Go enforces an opinionated structure package organization. Unfortunately it's opinions are mostly wrong. Golang's build system is rooted in a global workspace. To import an external package, you place it in the global workspace and point to its directory tree node. This results in several major design flaws.
 
