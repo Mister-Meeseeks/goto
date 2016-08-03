@@ -63,8 +63,6 @@ function importQualified() {
 function importRemote() {
     local projectUrl=$1; shift
     srcDir=$(retrieveRemote $projectUrl)
-    echo "Done" >&2
-    echo importDirectory $srcDir $@ >&2
     importDirectory $srcDir $@
 }
 
