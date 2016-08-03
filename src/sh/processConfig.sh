@@ -1,6 +1,8 @@
 #!/bin/bash -eu
 
-configDir=$1
+configPath=$1
+
+projectRoot=$(dirname $(readlink -f $configPath))
 
 function processText() {
     while read line ; do
@@ -49,7 +51,7 @@ function importDirectory() {
 
 function importDirect() {
     local projectDir=$1
-    includeProject $projectDir $importsDir
+    includeProject $projectDir $importSrc $projectRoot
 }
 
 function importQualified() {
@@ -57,7 +59,7 @@ function importQualified() {
     local qualifiedSub=$2
     local qualifiedDir=$qualifiedSrc/$qualifiedSub
     mkdir -p $qualifiedDir
-    includeProject $projectDir $qualifiedDir
+    includeProject $projectDir $qualifiedDir $projectRoot
 }
 
 function importRemote() {
@@ -66,4 +68,4 @@ function importRemote() {
     importDirectory $srcDir $@
 }
 
-cat $configDir | processText
+cat $configPath | processText

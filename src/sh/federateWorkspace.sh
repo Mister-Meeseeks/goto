@@ -1,30 +1,30 @@
 #!/bin/bash -eu
 
-function federateImport() {
-    local importDir=$1
-    cp -r $importDir/* $federatedWorkspace/src/
+function federateSource() {
+    local srcRootDir=$1
+    for i in $(ls $srcRootDir/) ; do
+	cp -r $srcRootDir/$i $federatedWorkspace/src/
+    done
 }
 
-function federateQualified() {
-    local importDir=$1
-    cp -r $importDir $federatedWorkspace/src/
+# Imports each sub-directory into the top-level of the global namespace
+function federateSubSources() {
+    local srcRootDir=$1
+    for i in $(ls $srcRootDir/) ; do
+	federateSource $srcRootDir/$i
+    done
 }
-
-function federateLocal() {
-    cp -r $localSrc/* $federatedWorkspace/src/
-}
-
-for i in $(ls $importSrc/) ; do
-    fedetateImport $importSrc/$i
-done
 
 # We must federate the src directory unqualified as well, so that's
 # it can reflexively access its own packages.
 for i in $(ls $qualifiedSrc/) ; do
-    federateImport $qualifiedSrc/$i
-    federateQualified $qualifiedSrc/$i
+    federateSource $qualifiedSrc/$i
 done
 
-federateLocal
+# Invocation occurs in reverse order of global namespace precedence
+federateSubSources $qualifiedSrc
+federateSource $qualifiedSrc
+federateSource $importSrc
+federateSource $localSrc
 
 
