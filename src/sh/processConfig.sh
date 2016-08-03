@@ -49,7 +49,7 @@ function importDirectory() {
 
 function importDirect() {
     local projectDir=$1
-    includeProject $project $importsDir
+    includeProject $projectDir $importsDir
 }
 
 function importQualified() {
@@ -63,7 +63,9 @@ function importQualified() {
 function importRemote() {
     local projectUrl=$1; shift
     srcDir=$(retrieveRemote $projectUrl)
-    importDirectory $projectUrl $@
+    echo "Done" >&2
+    echo importDirectory $srcDir $@ >&2
+    importDirectory $srcDir $@
 }
 
 cat $configDir | processText

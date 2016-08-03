@@ -24,7 +24,7 @@ function listProjectMembers() {
     local projectDir=$1
     local cond="$@"
     find $projectDir $cond -printf "%P\n" \
-	| grep -v "^$gotoWorkSubDir"
+	| egrep -v "^[.]" # Ignore hidden directories
 }
 
 function makeSubDirectories() {
