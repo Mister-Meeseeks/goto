@@ -4,22 +4,22 @@ configDir=$1
 
 function processText() {
     while read line ; do
-	processLine $line
+	processLine "$line"
     done
 }
 
 function processLine() {
     local line=$1
-    if isActionableLine $line ; then
-	process $line
+    if isActionableLine "$line" ; then
+	processValidLine "$line"
     fi
 }
 
 # Ignore comments and empty lines
 function isActionableLine() {
     local line=$1
-    [[ $(cut -b 1 <(echo $line)) == '#' && \
-	! -z $(cut -d ' ' -f 1 <(echo $line)) ]]
+    [[ $(cut -b 1 <(echo $line)) != '#' && \
+	! -z "$line" ]]
 }
 
 function processValidLine() {
@@ -30,7 +30,7 @@ function processValidLine() {
     processFields $cmdType $cmdVal $cmdQual
 }
 
-function processField() {
+function processFields() {
     local cmdType=$1; shift
     if [[ $cmdType == "import" ]] ; then
 	importDirectory $@
@@ -55,7 +55,7 @@ function importDirect() {
 function importQualified() {
     local projectDir=$1
     local qualifiedSub=$2
-    local qualifiedDir=$qualifiedDirs/$qualifiedSub
+    local qualifiedDir=$qualifiedSrc/$qualifiedSub
     mkdir -p $qualifiedDir
     includeProject $projectDir $qualifiedDir
 }

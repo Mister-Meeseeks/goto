@@ -1,13 +1,13 @@
 #!/bin/bash -eu
 
 function federateImport() {
-    local importName=$1
-    cp -r $importSrc/$importName/* $federatedWorkspace/src/
+    local importDir=$1
+    cp -r $importDir/* $federatedWorkspace/src/
 }
 
 function federateQualified() {
-    local importName=$1
-    cp -r $importSrc/$importName/ $federatedWorkspace/src/$importName
+    local importDir=$1
+    cp -r $importDir $federatedWorkspace/src/
 }
 
 function federateLocal() {
@@ -15,11 +15,14 @@ function federateLocal() {
 }
 
 for i in $(ls $importSrc/) ; do
-    fedetateImport $i
+    fedetateImport $importSrc/$i
 done
 
-for i in $(ls $importSrc/) ; do
-    fedetateQualified $i
+# We must federate the src directory unqualified as well, so that's
+# it can reflexively access its own packages.
+for i in $(ls $qualifiedSrc/) ; do
+    federateImport $qualifiedSrc/$i
+    federateQualified $qualifiedSrc/$i
 done
 
 federateLocal
