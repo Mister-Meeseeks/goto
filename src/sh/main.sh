@@ -1,10 +1,21 @@
 #!/bin/bash -eu
 
 scriptDir=$(dirname $(readlink -f $0))
-buildDir=$PWD
-outputPath=$buildDir
-
 export PATH=$PATH:$scriptDir/
+
+if trapHelpMsg $@ ; then
+    exit
+else
+    case $# in
+	0)  buildDir=$PWD
+	    outputPath=$buildDir;;
+	1)  buildDir=$PWD
+	    outputPath=$1;;
+	2)  buildDir=$(readlink -f $1)
+	    outputPath=$2;;
+    esac
+fi
+
 . dirLayout
 
 projectDir=$(discoverProject $buildDir)
