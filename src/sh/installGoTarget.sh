@@ -21,7 +21,7 @@ export GOPATH=$(sanitizeWorkspacePath $workspaceDir)
 go install $subPath
 
 if [[ -d $workspaceDir/bin/ ]] ; then
-    shopt nullglob
+    shopt -s nullglob
     ls $workspaceDir/bin/*
 fi
 
