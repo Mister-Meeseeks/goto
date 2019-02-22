@@ -1,9 +1,11 @@
 # goto
 
-An Alternative build system for Go. Never deal with $GOPATH again. Take back your freedom to layout projects however
-you want. Stop hardcoding package URLs in source code. 
+An Alternative build and package system for Go. Never deal with $GOPATH again. Take back your freedom to 
+layout projects however you want. Stop hardcoding package URLs in source code. 
 
-
+Go enforces a very opinionated packaging system. Not everyone likes it. Many would like the freedom to
+use the Go language itself without conforming to a rigid view of how projects and packages should be laid
+out.
 
 ## Motivations
 
