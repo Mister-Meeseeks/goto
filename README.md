@@ -26,8 +26,8 @@ To install to the Linux system environment run:
 
     sudo ./install.sh
     
-That installs to /usr/local/bin/. To install to an alternative location, or if you don't have sudo access,
-pass an install directory (preferably in your $PATH) to as an argument to the install script. For example:
+If you don't have sudo access or want to install to an alternative location pass a target directory
+as an argument. (Preferably one in your environment's $PATH). For example:
 
     ./install ~/local/bin/
     
