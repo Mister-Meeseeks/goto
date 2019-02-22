@@ -9,9 +9,9 @@ else
     case $# in
 	0)  buildDir=$PWD
 	    outputPath=$buildDir;;
-	1)  buildDir=$PWD
-	    outputPath=$1;;
-	2)  buildDir=$(readlink -f $1)
+	1)  buildDir=$1
+	    outputPath=$PWD;;
+	2)  buildDir=$1
 	    outputPath=$2;;
     esac
 fi

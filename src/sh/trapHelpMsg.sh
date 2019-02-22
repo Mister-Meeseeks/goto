@@ -23,7 +23,7 @@ goto is a tool for simplifying go's package management system.
 Usage:
 
    goto
-   goto [output path]
+   goto [build dir]
    goto [output path] [build dir]
 
 Where:
