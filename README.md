@@ -38,3 +38,45 @@ as an argument. (Preferably one in your environment's $PATH). For example:
 
     ./install ~/local/bin/
     
+## Hello World
+
+Let's start with a simple Hello World app. We have three files spread across different packages:
+
+*world.go*
+
+    package world
+    func Msg() string {
+	  return "World"
+    }
+
+*hello.go*:
+
+    package hello
+    import "helloWorld/hello/world"
+    func Msg() string {
+	    return "Hello " + world.Msg() + "!"
+    }
+
+*main.go*
+
+    package main
+    import "helloWorld/hello/world"
+    import "fmt"
+    func main() {
+	  fmt.Println(hello.Msg())
+    }
+
+Setting up this app with Go's builtin packaging system is a pain. We have to add it to our canonical 
+$GOPATH directory and carefully lay out the directory:
+
+    [GOPATH]
+    └── src
+    └── helloWorld
+        ├── cmd
+        │   ├── main.go
+        └── hello
+            ├── hello.go
+            └── world
+                ├── world.go
+
+
