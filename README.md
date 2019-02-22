@@ -78,7 +78,7 @@ Now in your favorite editor create three files at the following relative paths i
 
 Your directory tree will look like this
 
-    myApp
+    .
     ├── goto.cfg
     ├── hello
     │   ├── hello.go
