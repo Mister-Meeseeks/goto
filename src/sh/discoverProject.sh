@@ -2,7 +2,12 @@
 
 buildDir=$1
 
-absBldDir=$(readlink -f $buildDir)
+if [[ ! -d $buildDir ]] ; then
+    echo "goto Error: No directory exists at $buildDir" >&2
+    exit 1
+fi
+
+absBldDir=$(readlink -f $buildDir/)
 iterSearchDir=$absBldDir
 
 while [[ $iterSearchDir != "/" ]] ; do
