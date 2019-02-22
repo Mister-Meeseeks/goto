@@ -1,7 +1,9 @@
 # goto
 
-An Alternative build system for Go. Never deal with GOPATH again. Take back your freedom to layout projects however
+An Alternative build system for Go. Never deal with $GOPATH again. Take back your freedom to layout projects however
 you want. Stop hardcoding package URLs in source code. 
+
+
 
 ## Motivations
 
