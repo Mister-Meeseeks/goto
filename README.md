@@ -1,5 +1,11 @@
 # goto
 
+## Under Construction
+
+Check back later
+
+## Intro
+
 An Alternative build and package system for Go. Never deal with $GOPATH again. Take back your freedom to 
 layout projects however you want. Stop hardcoding package URLs in source code. 
 
@@ -10,6 +16,7 @@ goto wraps the Go package system in a way that adds the following enhancements:
 * Import from any location in the filesystem
 * Namespace package names based on subdirectory
 * Alias package names
+
 
 ## Quickstart
 
