@@ -20,7 +20,8 @@ subPath=$(selectSubPath $subPathArg)
 export GOPATH=$(sanitizeWorkspacePath $workspaceDir)
 go install $subPath
 
-if [[ ! -z $(ls $workspaceDir/bin/) ]] ; then
+if [[ -d $workspaceDir/bin/ ]] ; then
+    shopt nullglob
     ls $workspaceDir/bin/*
 fi
 
