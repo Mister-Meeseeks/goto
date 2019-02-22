@@ -3,9 +3,14 @@
 An Alternative build and package system for Go. Never deal with $GOPATH again. Take back your freedom to 
 layout projects however you want. Stop hardcoding package URLs in source code. 
 
-Go enforces a very opinionated packaging system. Not everyone likes it. Many would like the freedom to
-use the Go language itself without conforming to a rigid view of how projects and packages should be laid
-out.
+goto wraps the Go package system in a way that adds the following enhancements:
+
+* Build multi-package projects in place, at any location, without setting $GOPATH
+* Specify package URLs once in a config file- not every single source file
+* Import packages from arbitrary locations in the filesystem
+* Import from a repo sub-directory just as easily as a repo.
+* Import packages from by just specifying subdirectory
+* Alias package names
 
 ## Motivations
 
