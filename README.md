@@ -14,9 +14,9 @@ goto wraps the Go package system in a way that adds the following enhancements:
 * Build multi-package projects in place, at any location, without setting $GOPATH
 * Specify package URLs just once in a config file
 * Import from any location in the filesystem
-* Namespace package names based on subdirectory
-* Alias package names
-
+* Alias package imports
+* Flexible repo structuring. 
+* Easy multi-project or multi-language repos.
 
 ## Quickstart
 
