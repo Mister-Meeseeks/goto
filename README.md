@@ -1,9 +1,7 @@
 # goto
-Fix golang's broken packaging system
 
-## Under Construction
-
-Project is not ready yet. Check back later.
+An Alternative build system for Go. Never deal with GOPATH again. Take back your freedom to layout projects however
+you want.
 
 ## Motivations
 
