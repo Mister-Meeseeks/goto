@@ -40,38 +40,66 @@ as an argument. (Preferably one in your environment's $PATH). For example:
     
 ## Hello World
 
-Let's start with a simple Hello World app. We have three files spread across different packages:
+Let's start with a simple Hello World app. First create a new directory for the app
 
-*world.go*
+    $ mkdir myApp
+    $ cd ./myApp
+    
+The first step is to create an empty `goto.cfg` file to let goto know where the root of the project
+starts:
+
+    $ touch goto.cfg
+    
+Now in your favorite editor create three files at the following relative paths inside the myApp directory:
+
+*./hello/world/world.go*
 
     package world
     func Msg() string {
 	  return "World"
     }
 
-*hello.go*:
+*./hello/hello.go*:
 
     package hello
-    import "helloWorld/hello/world"
+    import "hello/world"
     func Msg() string {
 	    return "Hello " + world.Msg() + "!"
     }
 
-*main.go*
+*./main/main.go*
 
     package main
-    import "helloWorld/hello/world"
+    import "hello"
     import "fmt"
     func main() {
 	  fmt.Println(hello.Msg())
     }
 
-Setting up this app with Go's builtin packaging system is a pain. We have to add it to our canonical 
-$GOPATH directory and carefully lay out the directory:
+Your directory tree will look like this
 
-    [GOPATH]
+    myApp
+    ├── goto.cfg
+    ├── hello
+    │   ├── hello.go
+    │   └── world
+    │       └── world.go
+    └── main.go
+
+Now that you're set up, let's give the goto build system a spin. From inside the myApp directory run
+
+    $ goto . hi
+    $ ./hi
+    Hello World!
+    
+Success. We see that goto successfully build an executable binary from our project's main function.
+And we never had to set foot in $GOPATH.
+
+In contrast this is what we'd have to do to get the same project working with go's native build system:
+
+    [$GOPATH]
       └── src
-        └── helloWorld
+        └── myApp
             ├── cmd
             │   ├── main.go
             └── hello
@@ -79,4 +107,11 @@ $GOPATH directory and carefully lay out the directory:
                 └── world
                     └── world.go
 
+We'd also have to add the boilerplate to each of the import statements referencing the name of the app
 
+    import "hello/world"
+    ->
+    import "myApp/hello/world"
+    
+Meaning if the name of the app ever changes, we have to manually change each source file in an error-prone
+way.
