@@ -95,3 +95,11 @@ Now that you're set up, let's give the goto build system a spin. From inside the
 Success. We see that goto successfully build an executable binary from our project's main function.
 And we never had to set foot in $GOPATH.
 
+# goto CLI
+
+The goto exectuable has a very straightforward command line interface. There are three ways to call it
+
+    $ goto
+    $ goto [buildDir]
+    $ goto [buildDir] [outPath]
+    
