@@ -6,10 +6,9 @@ layout projects however you want. Stop hardcoding package URLs in source code.
 goto wraps the Go package system in a way that adds the following enhancements:
 
 * Build multi-package projects in place, at any location, without setting $GOPATH
-* Specify package URLs once in a config file- not every single source file
-* Import packages from arbitrary locations in the filesystem
-* Import from a repo sub-directory just as easily as a repo.
-* Import packages from by just specifying subdirectory
+* Specify package URLs just once in a config file
+* Import from any location in the filesystem
+* Namespace package names based on subdirectory
 * Alias package names
 
 ## Motivations
