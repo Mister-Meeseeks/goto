@@ -95,23 +95,3 @@ Now that you're set up, let's give the goto build system a spin. From inside the
 Success. We see that goto successfully build an executable binary from our project's main function.
 And we never had to set foot in $GOPATH.
 
-In contrast this is what we'd have to do to get the same project working with go's native build system:
-
-    [$GOPATH]
-      └── src
-        └── myApp
-            ├── cmd
-            │   ├── main.go
-            └── hello
-                ├── hello.go
-                └── world
-                    └── world.go
-
-We'd also have to add the boilerplate to each of the import statements referencing the name of the app
-
-    import "hello/world"
-    ->
-    import "myApp/hello/world"
-    
-Meaning if the name of the app ever changes, we have to manually change each source file in an error-prone
-way.
