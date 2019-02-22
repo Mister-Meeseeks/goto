@@ -2,14 +2,19 @@
 
 scriptDir=$(dirname $(readlink -f $0))
 
-if [[ $# -gt 0 ]] ; then
-    installRoot=$(readlink -f $1)
+if [[ $# -eq 0 ]] ; then
+    binDir=/usr/local/bin/
+    shareDir=/usr/local/share/goto/
+    
+elif [[ $# -eq 1 ]] ; then
+    shareDir=$scriptDir/lib/share/
+    binDir=$1
+    
 else
-    installRoot=/usr/local/
+    shareDir=$1
+    binDir=$2
 fi
 
-shareDir=$installRoot/share/goto/
-binDir=$installRoot/bin/
 binPath=$binDir/goto
 
 mkdir -p $binDir $shareDir
@@ -21,6 +26,7 @@ function installShareScripts() {
 	| bash
 }
 
+mkdir -p $shareDir
 ls $shSrc/*.sh | installShareScripts
 chmod a+x $shareDir/*
 
@@ -29,3 +35,5 @@ if [[ -L $binPath ]] ; then
 fi
 
 ln -s $shareDir/main $binPath
+
+
