@@ -70,13 +70,13 @@ Setting up this app with Go's builtin packaging system is a pain. We have to add
 $GOPATH directory and carefully lay out the directory:
 
     [GOPATH]
-    └── src
-    └── helloWorld
-        ├── cmd
-        │   ├── main.go
-        └── hello
-            ├── hello.go
-            └── world
-                ├── world.go
+      └── src
+        └── helloWorld
+            ├── cmd
+            │   ├── main.go
+            └── hello
+                ├── hello.go
+                └── world
+                    └── world.go
 
 
