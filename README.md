@@ -137,10 +137,21 @@ of the target until it finds the project root.
 Within the project all packages are visible based on their relative path inside the tree. For the 
 following project tree
 
-## Importing
+## goto.cfg
+
+### Imports
 
 ### Alias
 
+## .goto Project Workspace
+
 ## Build Modes
 
-## 
+### Test
+
+### Build
+
+### Build Flags
+
+### Go Commands
+
