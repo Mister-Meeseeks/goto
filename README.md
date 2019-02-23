@@ -108,7 +108,7 @@ Now that you're set up, let's give the goto build system a spin. From inside the
 Success. We see that goto successfully build an executable binary from our project's main function.
 And we never had to set foot in $GOPATH.
 
-## goto CLI
+## Command Line Interface
 
 The goto exectuable has a very straightforward command line interface. The easiest way to invoke it is
 with no arguments: 
@@ -128,7 +128,7 @@ by default output to the current working directory. But that can be changed with
     
 Will do the same as above but export the compiled binaries (if any) to `./bin/`
 
-## goto Project Tree
+## Project Tree
 
 The directory tree for a goto project is defined by the precense of a `goto.cfg` file at the root.
 When the goto command builds a package directory, it sequentially searches through the parent directories
@@ -137,9 +137,9 @@ of the target until it finds the project root.
 Within the project all packages are visible based on their relative path inside the tree. For the 
 following project tree
 
-## Imports
+## Importing
 
-### Qualified
+### Alias
 
 ## Build Modes
 
