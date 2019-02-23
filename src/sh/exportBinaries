@@ -1,10 +1,30 @@
 #!/bin/bash -eu
 
-outputPath=$1
+workspaceDir="$1"
+outputPath="$2"
 
-if [[ -d $outputPath ]] ; then
-    sed "s+.*+cp & $outputPath/+" | bash
-else
-    sed "s+.*+cp & $outputPath+" | head -n 1 | bash
+hasCopied=0
+isDirTgt=0
+
+if [[ -d "$outputPath" ]] ; then
+    isDirTgt=1
 fi
 
+function assertCollision() {
+    if [[ $hasCopied -gt 0 && $isDirTgt -eq 0 ]] ; then
+        echo "goto Error: Multiple binaries for file-type output " \
+             "target: $outputPath" >&2
+        exit 1
+    fi
+}
+
+if [[ -d "$workspaceDir/bin/" ]] ; then
+    shopt -s nullglob
+
+    for binSrc in $workspaceDir/bin/* ; do
+        assertCollision
+        cp $binSrc $outputPath
+        hasCopied=1
+    done
+fi
+    

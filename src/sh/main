@@ -27,5 +27,5 @@ setWorkDirs $workDir
 includeProject $projectDir $localSrc
 federateWorkspace
 
-installGoTarget $federatedWorkspace $subPath \
-    | exportBinaries $outputPath
+installGoTarget $federatedWorkspace $subPath
+exportBinaries $federatedWorkspace $outputPath

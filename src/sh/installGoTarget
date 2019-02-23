@@ -29,9 +29,3 @@ else
 fi
 
 go install $subPath
-
-if [[ -d $workspaceDir/bin/ ]] ; then
-    shopt -s nullglob
-    ls $workspaceDir/bin/*
-fi
-
