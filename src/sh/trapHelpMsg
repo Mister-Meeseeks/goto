@@ -20,23 +20,50 @@ cat <<EOF
 
 goto is a tool for simplifying go's package management system.
 
+goto compiles any compatible go project at any path or URL. It uses an
+internally generated go workspace unique to each project. That allows
+building go packages anywhere without using \$GOPATH. 
+
+Use goto.cfg to define project trees. And as a single point of configuration
+to define package tree imports and (optionally) aliases. 
+
 Usage:
 
-   goto
-   goto [build dir]
-   goto [output path] [build dir]
+   goto 
+   goto [PACKAGE_DIR]
+   goto -o OUT_PATH [PACKAGE_DIR]
+   goto -t [PACKAGE_DIR]
+   goto [OPTIONS] [PACKAGE_DIR]
 
-Where:
+Position Arguments:
 
-   build dir:      The directory containing the golang code to compile into a 
-                   binary. If using a project structure, a parent directory at
-                   the root of the project has a goto.cfg file. If empty default
-                   is the current working directory.
+   PACKAGE_DIR:    Path to a package directory. Must contain a goto.cfg or
+                   have a parent directory that does so. goto.cfg marks the
+                   root directory of the project tree. If blank defaults 
+                   to ./
 
-   output path:    Directory or named path where the compiled binary is written.
-                   If empty default is the build directory.
+Flags:
 
-   For more information check the README.md and docs in the project repository:
-   github.com/Mister-Meeseeks/goto/
+   -o OUT_PATH     Directory or file path to which all binaries built by the
+                   goto project are exported. If black defaults to ./ 
+
+   -c GO_CMD       Runs underlying mode in "go GO_CMD" instead of default 
+                   "go install". GO_CMD can be any valid command to the go CLI.
+                   E.g. build, test, doc, etc.
+
+   -t              Single flag that changes the underlying run mode to go-test
+                   (Default is go-install). Equivalent to "-c test"
+
+   -b              Single flat that changes the underlying run mode to go-build.
+                   Equivalnet to "-c build"
+
+   -f "GO_FLAGS"   Flag sets the build flags to be passed to the underlying go
+                   command. Make sure to quote if using multiple flags. E.g.
+                   to build with shared libraries and race detection:
+                   -f "-race -buildmode c-shared"
+
+
+For more information check the README.md and docs in the project repository:
+  github.com/Mister-Meeseeks/goto/
 
 EOF
