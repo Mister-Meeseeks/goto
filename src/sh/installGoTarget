@@ -17,7 +17,17 @@ function sanitizeWorkspacePath() {
 }
 
 subPath=$(selectSubPath $subPathArg)
-export GOPATH=$(sanitizeWorkspacePath $workspaceDir)
+sanitWork=$(sanitizeWorkspacePath $workspaceDir)
+
+: "${GOPATH:=}"
+export GOPATH
+
+if [[ -z $GOPATH ]] ; then
+    export GOPATH=$sanitWork
+else
+    export GOPATH=$sanitWork:$GOPATH
+fi
+
 go install $subPath
 
 if [[ -d $workspaceDir/bin/ ]] ; then
