@@ -1,22 +1,24 @@
 #!/bin/bash -eu
 
-buildDir=$1
+buildDir="$1"
 
-if [[ ! -d $buildDir ]] ; then
+if [[ ! -d "$buildDir" ]] ; then
     echo "goto Error: No directory exists at $buildDir" >&2
     exit 1
 fi
 
-absBldDir=$(readlink -f $buildDir/)
-iterSearchDir=$absBldDir
+absBldDir=$(readlink -f "$buildDir/")
+iterSearchDir="$absBldDir"
 
-while [[ $iterSearchDir != "/" ]] ; do
-    if [[ -e $iterSearchDir/$gotoCfgBase ]] ; then
-	echo $iterSearchDir
+while [[ "$iterSearchDir" != "/" ]] ; do
+    if [[ -e "$iterSearchDir/$gotoCfgBase" ]] ; then
+	echo "$iterSearchDir"
 	exit 0
     fi
-    iterSearchDir=$(dirname $iterSearchDir)
+    iterSearchDir=$(dirname "$iterSearchDir")
 done
 
 # Non-goto project. Use buildDir as workspace source...
-echo $buildDir
+echo "goto Warning: No goto.cfg found in directory tree." \
+     "Assuming goto project root is specified buildDir:" $buildDir >&2
+echo "$buildDir"
