@@ -14,9 +14,9 @@ goto wraps the Go package system in a way that adds the following enhancements:
 * Build multi-package projects in place, at any location, without setting $GOPATH
 * Specify package URLs just once in a config file
 * Import from any location in the filesystem
-* Namespace package names based on subdirectory
-* Alias package names
-
+* Alias package imports
+* Flexible repo structuring. 
+* Easy multi-project or multi-language repos.
 
 ## Quickstart
 
@@ -37,4 +37,69 @@ If you don't have sudo access or want to install to an alternative location pass
 as an argument. (Preferably one in your environment's $PATH). For example:
 
     ./install ~/local/bin/
+    
+## Hello World
+
+Let's start with a simple Hello World app. First create a new directory for the app
+
+    $ mkdir myApp
+    $ cd ./myApp
+    
+The first step is to create an empty `goto.cfg` file to let goto know where the root of the project
+starts:
+
+    $ touch goto.cfg
+    
+Now in your favorite editor create three files at the following relative paths inside the myApp directory:
+
+*./hello/world/world.go*
+
+    package world
+    func Msg() string {
+	  return "World"
+    }
+
+*./hello/hello.go*:
+
+    package hello
+    import "hello/world"
+    func Msg() string {
+	    return "Hello " + world.Msg() + "!"
+    }
+
+*./main/main.go*
+
+    package main
+    import "hello"
+    import "fmt"
+    func main() {
+	  fmt.Println(hello.Msg())
+    }
+
+Your directory tree will look like this
+
+    .
+    ├── goto.cfg
+    ├── hello
+    │   ├── hello.go
+    │   └── world
+    │       └── world.go
+    └── main.go
+
+Now that you're set up, let's give the goto build system a spin. From inside the myApp directory run
+
+    $ goto . hi
+    $ ./hi
+    Hello World!
+    
+Success. We see that goto successfully build an executable binary from our project's main function.
+And we never had to set foot in $GOPATH.
+
+# goto CLI
+
+The goto exectuable has a very straightforward command line interface. There are three ways to call it
+
+    $ goto
+    $ goto [buildDir]
+    $ goto [buildDir] [outPath]
     
