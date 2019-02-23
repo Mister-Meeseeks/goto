@@ -7,9 +7,8 @@ if [[ $# -eq 0 ]] ; then
     shareDir=/usr/local/share/goto/
     
 elif [[ $# -eq 1 ]] ; then
-    shareDir=$scriptDir/lib/share/
     binDir=$1
-    
+    shareDir=""
 else
     shareDir=$1
     binDir=$2
@@ -22,14 +21,18 @@ mkdir -p $binDir $shareDir
 shSrc=$scriptDir/src/sh/
 
 function installShareScripts() {
-    sed "s+\(.*\)/\(.*\).sh+cp & $shareDir/\2+" \
+    sed "s+\(.*\)/\(.*\)+cp & $shareDir/\2+" \
 	| bash
 }
 
-mkdir -p $shareDir
-ls $shSrc/*.sh | installShareScripts
-chmod a+x $shareDir/*
-
+if [[ ! -z $shareDir ]] ; then
+    mkdir -p $shareDir
+    ls $shSrc/* | installShareScripts
+    chmod a+x $shareDir/*
+else
+    shareDir=$(readlink -f $shSrc)
+fi
+    
 if [[ -L $binPath ]] ; then
     unlink $binPath
 fi
