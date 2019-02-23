@@ -5,15 +5,26 @@ export PATH=$PATH:$scriptDir/
 
 if trapHelpMsg $@ ; then
     exit
-else
-    case $# in
-	0)  buildDir=$PWD
-	    outputPath=$buildDir;;
-	1)  buildDir=$1
-	    outputPath=$PWD;;
-	2)  buildDir=$1
-	    outputPath=$2;;
+fi
+
+outputPath=.
+goCmd=install
+goCmdFlags=""
+while getopts "ct:o:f:" opt ; do
+    case $opt in
+        o) outputPath="$OPTARG";;
+        c) goCmd=$OPTARG;;
+        t) goCmd=test;;
+        r) goCmd=run
+        f) goCmdFlags="$OPTARG";;
     esac
+done
+
+shift $(($OPTIND - 1))
+if [[ $# -eq 0 ]] ; then
+    buildDir="$PWD"
+else
+    buildDir="$1"
 fi
 
 . dirLayout
