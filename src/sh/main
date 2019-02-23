@@ -10,12 +10,12 @@ fi
 outputPath=.
 goCmd=install
 goCmdFlags=""
-while getopts "o:trc:f:" opt ; do
+while getopts "o:tbc:f:" opt ; do
     case $opt in
         o) outputPath="$OPTARG";;
         c) goCmd=$OPTARG;;
         t) goCmd=test;;
-        r) goCmd=run;;
+        b) goCmd=build;;
         f) goCmdFlags="$OPTARG";;
     esac
 done
