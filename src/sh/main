@@ -10,12 +10,12 @@ fi
 outputPath=.
 goCmd=install
 goCmdFlags=""
-while getopts "ct:o:f:" opt ; do
+while getopts "o:trc:f:" opt ; do
     case $opt in
         o) outputPath="$OPTARG";;
         c) goCmd=$OPTARG;;
         t) goCmd=test;;
-        r) goCmd=run
+        r) goCmd=run;;
         f) goCmdFlags="$OPTARG";;
     esac
 done
@@ -29,14 +29,16 @@ fi
 
 . dirLayout
 
-projectDir=$(discoverProject $buildDir)
-subPath=$(breakOffBuildSub $projectDir $buildDir)
+projectDir=$(discoverProject "$buildDir")
+subPath=$(breakOffBuildSub "$projectDir" "$buildDir")
 
-workDir=$(setupWorkDir $projectDir)
-setWorkDirs $workDir
+workDir=$(setupWorkDir "$projectDir")
+setWorkDirs "$workDir"
 
-includeProject $projectDir $localSrc
+includeProject "$projectDir" "$localSrc"
 federateWorkspace
 
-installGoTarget $federatedWorkspace $subPath
-exportBinaries $federatedWorkspace $outputPath
+goCall="$goCmd $goCmdFlags"
+
+installGoTarget "$goCall" "$federatedWorkspace" "$subPath"
+exportBinaries "$federatedWorkspace" "$outputPath"

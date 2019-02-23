@@ -1,31 +1,22 @@
 #!/bin/bash -eu
 
-workspaceDir=$1;
-shift; subPathArg=$@
+goCall="$1"
+workspaceDir="$2"
+subPath="$3"
 
-function selectSubPath() {
-    if [[ $# -eq 0 ]] ; then
-	echo root
-    else
-	echo $1
-    fi
-}
+if [[ -z "$subPath" ]] ; then
+    subPath=root
+fi
 
-function sanitizeWorkspacePath() {
-    local workspaceDir=$1
-    readlink -f $workspaceDir
-}
-
-subPath=$(selectSubPath $subPathArg)
-sanitWork=$(sanitizeWorkspacePath $workspaceDir)
+sanitWork=$(readlink -f "$workspaceDir")
 
 : "${GOPATH:=}"
 export GOPATH
 
-if [[ -z $GOPATH ]] ; then
-    export GOPATH=$sanitWork
+if [[ -z "$GOPATH" ]] ; then
+    export GOPATH="$sanitWork"
 else
-    export GOPATH=$sanitWork:$GOPATH
+    export GOPATH="$sanitWork:$GOPATH"
 fi
 
-go install $subPath
+go $goCall "$subPath"
