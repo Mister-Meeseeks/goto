@@ -155,3 +155,11 @@ following project tree
 
 ### Go Commands
 
+## Comparison to Go Modules
+
+* No aliasing
+* Modules must declare canonical location
+* goto compatible with all Go versions
+* No SemVer problems
+* No incompatibility issues with import or export by non-modules
+
