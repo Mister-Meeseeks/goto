@@ -145,7 +145,13 @@ following project tree
 
 ## .goto Project Workspace
 
-## Exporting Packages
+## Exporting
+
+### Binaries
+
+### Source
+
+### Packages
 
 ## Build Modes
 
@@ -165,3 +171,4 @@ following project tree
 * No SemVer problems
 * No incompatibility issues with import or export by non-modules
 
+### Modules in goto projects
