@@ -31,9 +31,11 @@ Usage:
 
    goto 
    goto [PACKAGE_DIR]
+   goto [PACKAGE_DIR]
+   goto -C [PROJECT_DIR] [PACKAGE_NAME]
    goto -o OUT_PATH [PACKAGE_DIR]
    goto -t [PACKAGE_DIR]
-   goto [OPTIONS] [PACKAGE_DIR]
+   goto [OPTIONS] [CMD_TARGET]
 
 Position Arguments:
 
@@ -42,17 +44,34 @@ Position Arguments:
                    root directory of the project tree. If blank defaults 
                    to ./
 
+   PACKAGE_NAME:   Go package name, to be resolved inside the goto project
+                   workspace.
+
+   CMD_TARGET      Argument to resolve and pass to the underlying Go command.
+                   Can always be a PACKAGE_DIR style argument, and will
+                   automatically resolve to the relative package workspace path.
+                   If not a path (e.g. "<sym> in "go doc <sym>") then passed 
+                   unaltered into the go command.
+
 Flags:
 
    -o OUT_PATH     Directory or file path to which all binaries built by the
                    goto project are exported. If black defaults to ./ 
 
+   -C PROJECT_DIR  Path to the goto project directory. (Also accepts any
+                   directory or file inside the project tree.) If not set
+                   uses the project containing the PACKAGE_DIR argument.
+
    -c GO_CMD       Runs underlying mode in "go GO_CMD" instead of default 
                    "go install". GO_CMD can be any valid command to the go CLI.
                    E.g. build, test, doc, etc.
 
-   -t              Single flag that changes the underlying run mode to go-test
-                   (Default is go-install). Equivalent to "-c test"
+   -t              Runs in go-test mode (instead of default go-instal). Will 
+                   test all child packages underneath the target package. 
+                   (I.e. foo -> foo...)
+
+   -T              Runs in go-test mode, but unlike -t does not automatically 
+                   add the child package target. Equivalent to "-c test"
 
    -b              Single flat that changes the underlying run mode to go-build.
                    Equivalnet to "-c build"
