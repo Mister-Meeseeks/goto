@@ -29,14 +29,27 @@ The goto executable is directly accessible from the repo, you can verify with:
 
     ./goto --help
     
-To install to the Linux system environment run:
+## Install
+    
+Default install is to the Linux system environment run:
 
     sudo ./install.sh
     
-If you don't have sudo access or want to install to an alternative location pass a target directory
+By default the executable is written to `/usr/local/bin/`. If you don't have sudo 
+access or want to install to an alternative location pass a target directory
 as an argument. (Preferably one in your environment's $PATH). For example:
 
-    ./install ~/local/bin/
+    ./install.sh ~/local/bin/
+    
+When installing to a custom path this way, the binary links back to the scripts to
+the repository itself. Therefore make sure to clone the git repo in a location that
+won't be moved or deleted. 
+
+To avoid this you can also specify a location to install the underlying scripts needed
+by the executable. Just call install with two positional arguments. The first is the 
+location to store the backend scripts. The second the binary path, like above.
+    
+    ./install.sh ~/local/scripts ~/local/bin/
     
 ## Hello World
 
@@ -95,11 +108,67 @@ Now that you're set up, let's give the goto build system a spin. From inside the
 Success. We see that goto successfully build an executable binary from our project's main function.
 And we never had to set foot in $GOPATH.
 
-# goto CLI
+## Command Line Interface
 
-The goto exectuable has a very straightforward command line interface. There are three ways to call it
+The goto exectuable has a very straightforward command line interface. The easiest way to invoke it is
+with no arguments: 
 
     $ goto
-    $ goto [buildDir]
-    $ goto [buildDir] [outPath]
+
+It builds the current working directory and outputs any compiled binaries to that same directory. 
+Any package directory in a goto project tree can be built passing its relative or absolute path as the
+positional argument:
+
+    $ goto ~/myProject/foo/bar/
+
+That builds the `foo/bar` package underneath the goto project at `~/myProject`. Compiled binaries are
+by default output to the current working directory. But that can be changed with the -o flag:
+
+    $ goto -o ./bin/ ~/myProject/foo/bar/
     
+Will do the same as above but export the compiled binaries (if any) to `./bin/`
+
+## Project Tree
+
+The directory tree for a goto project is defined by the precense of a `goto.cfg` file at the root.
+When the goto command builds a package directory, it sequentially searches through the parent directories
+of the target until it finds the project root. 
+
+Within the project all packages are visible based on their relative path inside the tree. For the 
+following project tree
+
+## goto.cfg
+
+### Imports
+
+### Alias
+
+## .goto Project Workspace
+
+## Exporting
+
+### Binaries
+
+### Source
+
+### Packages
+
+## Build Modes
+
+### Test
+
+### Build
+
+### Build Flags
+
+### Go Commands
+
+## Comparison to Go Modules
+
+* No aliasing
+* Modules must declare canonical location
+* goto compatible with all Go versions
+* No SemVer problems
+* No incompatibility issues with import or export by non-modules
+
+### Modules in goto projects
