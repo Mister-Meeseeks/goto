@@ -5,6 +5,21 @@ bldDir=$2
 
 absBldDir=$(readlink -f $bldDir)
 
-echo $absBldDir \
-    | sed "s+$projectDir++" \
-    | sed 's+^/++'
+if (echo "$absBldDir" | egrep -q "^$projectDir") ; then
+    echo $absBldDir \
+        | sed "s+$projectDir++" \
+        | sed 's+^/++'
+    
+elif (echo "$bldDir" | egrep -q "^/") ; then
+    echo "goto Error: Path does not exist in project: $bldDir" >&2
+    exit 1
+
+else
+    relPath=$projectDir/$bldDir
+    
+    if [[ ! -d $relPath ]] ; then
+        echo "goto Error: Path does not exist in project: $bldDir" >&2
+        exit 1
+    fi
+    breakOffBuildSub $projectDir $projectDir/$bldDir
+fi

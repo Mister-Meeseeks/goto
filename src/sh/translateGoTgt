@@ -12,20 +12,12 @@ function isPathTgt() {
 }
 
 function rerefPath() {
+    set -e
     local tgt="$1"
     local path=$(maskGoWilds "$tgt")
-    local subPath=$(breakOffBuildSub "$projectDir" "$path")
-    addBackWilds "$tgt" "$subPath"
-}
-
-function addBackWilds() {
-    local origArg="$1"
-    local subPath="$2"
-    if [[ "$origArg" != $(maskGoWilds "$origArg") ]] ; then
-        addGoWild "$subPath"
-    else
-        echo "$subPath"
-    fi
+    local subPath
+    subPath=$(breakOffBuildSub "$projectDir" "$path")
+    addBackGoWilds "$tgt" "$subPath"
 }
 
 function rerefProjectPath() {

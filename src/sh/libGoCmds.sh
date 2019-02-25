@@ -29,8 +29,26 @@ function maskGoWilds() {
         | sed 's+[.][.][.]$++'
 }
 
-function addGoWild() {
-    echo "$1..."
+function addBackGoWilds() {
+    local origArg="$1"
+    local subPath="$2"
+    local goWild=$(whatGoWild "$origArg")
+    echo "${subPath}${goWild}" \
+         | sanitizeRootWilds
+}
+
+function sanitizeRootWilds() {
+    sed "s+^/+./+"
+}
+
+function whatGoWild() {
+    if (echo "$1" | egrep -q "/[.][.][.]$") ; then
+        echo "/..."
+    elif (echo "$1" | egrep -q "[.][.][.]$") ; then
+        echo "..."
+    else
+        echo ""
+    fi
 }
 
 function fileToPackage() {
