@@ -1,31 +1,29 @@
 #!/bin/bash -eu
 
 cntxArg="$1"
-buildTgt="$2"
+tgtArg="$2"
 
 if [[ ! -z "$cntxArg" ]] ; then
-    echo "$cntxArg"
-    exit 0
+    tgtArg="$cntxArg"
 fi
 
-# Want to convert `go test` type arguments of the form a/b/... to their intended
-# package directory. I.e. drop '...' to resolve a package path
-function maskGoWilds() {
-    echo "$1" \
-        | sed 's+^[.][.][.]$+./+' \
-        | sed 's+[.][.][.]$++'
-}
+. libGoCmds.sh
 
-buildPath=$(maskGoWilds "$buildTgt")
+buildPath=$(maskGoWilds "$tgtArg")
+buildDir=$(fileToPackage "$buildPath")
 
-if [[ -d "$buildPath" ]] ; then
-    echo "$buildPath"
-    
-elif [[ -e "$buildPath" ]] ; then
-    dirname "$buildPath"
+if [[ -e "$buildDir" ]] ; then
+    echo "$buildDir"
     
 else
-    echo "goto Warning: Target ($buildTgt) is not a filesystem path. Using" \
-         "current working directory for project context" >&2
-    pwd
+    if [[ -z "$cntxArg" ]] ; then
+        echo "goto Warning: Target ($tgtArg) is not a filesystem path." \
+             "Using current working directory for project context" >&2
+        pwd
+
+    else
+        echo "goto Error: Specified context directory does not exist" \
+             "$cntxArg" >&2
+        exit 1
+    fi
 fi

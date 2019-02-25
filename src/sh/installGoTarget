@@ -2,11 +2,7 @@
 
 goCall="$1"
 workspaceDir="$2"
-subPath="$3"
-
-if [[ -z "$subPath" ]] ; then
-    subPath=root
-fi
+goTgt="$3"
 
 sanitWork=$(readlink -f "$workspaceDir")
 
@@ -19,4 +15,4 @@ else
     export GOPATH="$sanitWork:$GOPATH"
 fi
 
-go $goCall "$subPath"
+go $goCall "$goTgt"

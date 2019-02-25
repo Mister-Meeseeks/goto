@@ -1,4 +1,3 @@
-#!/bin/bash -eu
 
 export gotoCfgBase=goto.cfg
 export gotoWorkSubDir=.goto
