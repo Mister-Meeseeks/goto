@@ -18,12 +18,23 @@ function assertCollision() {
     fi
 }
 
+function copySafe() {
+    local binSrc="$1"
+    local binBase=$(basename "$binSrc")
+    if [[ $isDirTgt -gt 0 && -d "$outputPath/$binBase" ]] ; then
+        echo "Goto warning: Skipping binary export. $binBase conflicts with" \
+             "directory at $outputPath/$binBase/" >&2
+    else
+        cp $binSrc $outputPath
+    fi
+}
+
 if [[ -d "$workspaceDir/bin/" ]] ; then
     shopt -s nullglob
 
     for binSrc in $workspaceDir/bin/* ; do
         assertCollision
-        cp $binSrc $outputPath
+        copySafe "$binSrc"
         hasCopied=1
     done
 fi

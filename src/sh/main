@@ -50,3 +50,4 @@ federateWorkspace
 
 installGoTarget "$goCall" "$federatedWorkspace" "$goTgt"
 exportBinaries "$federatedWorkspace" "$outputPath"
+
