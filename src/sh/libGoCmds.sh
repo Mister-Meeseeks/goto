@@ -37,6 +37,16 @@ function addBackGoWilds() {
          | sanitizeRootWilds
 }
 
+function appendGoWild() {
+    if [[ -z "$1" ]] ; then
+        echo "./..."
+    elif [[ -z $(whatGoWild "$1") ]] ; then
+        echo "$1..."
+    else
+        echo "$1"
+    fi
+}
+
 function sanitizeRootWilds() {
     sed "s+^/+./+"
 }

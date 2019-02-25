@@ -11,12 +11,15 @@ outputPath=.
 goCmd=install
 goCmdFlags=""
 cntxDir=""
+addGoWildcard=0
 
-while getopts "o:tbc:f:C:" opt ; do
+while getopts "o:tTbc:f:C:" opt ; do
     case $opt in
         o) outputPath="$OPTARG";;
         c) goCmd=$OPTARG;;
-        t) goCmd=test;;
+        t) goCmd=test
+           addGoWildcard=1;;
+        T) goCmd=test;;
         b) goCmd=build;;
         f) goCmdFlags="$OPTARG";;
         C) cntxDir="$OPTARG";;
@@ -31,12 +34,13 @@ else
 fi
 
 . libDirLayout.sh
+. libGoCmds.sh
 
 buildDir=$(inferBuildDir "$cntxDir" "$buildTgt")
 projectDir=$(discoverProject "$buildDir")
 
 goCall="$goCmd $goCmdFlags"
-goTgt=$(translateGoTgt "$projectDir" "$buildTgt")
+goTgt=$(translateGoTgt "$projectDir" "$buildTgt" $addGoWildcard)
 
 workDir=$(setupWorkDir "$projectDir")
 setWorkDirs "$workDir"

@@ -2,6 +2,7 @@
 
 projectDir="$1"
 buildTgt="$2"
+castWildcard=$3
 
 . libGoCmds.sh
 
@@ -35,4 +36,9 @@ function prepPathTgt() {
 }
 
 refTgt=$(prepPathTgt "$buildTgt")
+
+if [[ $castWildcard -gt 0 ]] ; then
+    refTgt=$(appendGoWild "$refTgt")
+fi
+
 sanitizePackage "$refTgt"
